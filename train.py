@@ -79,8 +79,9 @@ if __name__ == '__main__':
             images, labels = ReadDataset().read(batch_data)
             train_step(batch_images=images, batch_labels=labels)
             spent_time = time.time() - start_time
-            print("Epoch: {}/{}, step: {}/{}, time spent: {:.2f}s, loss: {:.5f}, "
-                  "cls loss: {:.5f}, reg loss: {:.5f}".format(epoch,
+            if step % print_frequency == 0:
+                print("Epoch: {}/{}, step: {}/{}, time spent: {:.2f}s, loss: {:.5f}, "
+                    "cls loss: {:.5f}, reg loss: {:.5f}".format(epoch,
                                                               EPOCHS,
                                                               step,
                                                               tf.math.ceil(train_count / BATCH_SIZE),
@@ -92,8 +93,8 @@ if __name__ == '__main__':
         cls_loss_metric.reset_states()
         reg_loss_metric.reset_states()
 
-        #if epoch % save_frequency == 0:
-        ssd.save_weights(filepath=save_model_dir+"epoch2-{}".format(epoch), save_format="tf")
+        if epoch % save_frequency == 0:
+            ssd.save_weights(filepath=save_model_dir+"epoch2-{}".format(epoch), save_format="tf")
 
         if test_images_during_training:
             visualize_training_results(pictures=test_images_dir_list, model=ssd, epoch=epoch)
