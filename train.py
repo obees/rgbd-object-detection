@@ -4,7 +4,7 @@ import numpy as np
 
 from configuration import IMAGE_HEIGHT, IMAGE_WIDTH, CHANNELS, EPOCHS, NUM_CLASSES, BATCH_SIZE, save_model_dir, \
     load_weights_before_training, load_weights_from_epoch, save_frequency, test_images_during_training, \
-    test_images_dir_list
+    test_images_dir_list, print_frequency
 from core.ground_truth import ReadDataset, MakeGT
 from core.loss import SSDLoss
 from core.make_dataset import TFDataset
