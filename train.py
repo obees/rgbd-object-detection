@@ -32,9 +32,9 @@ if __name__ == '__main__':
 #def toto():
     # GPU settings
     gpus = tf.config.list_physical_devices("GPU")
-    if gpus:
-        for gpu in gpus:
-            tf.config.experimental.set_memory_growth(gpu, True)
+    #if gpus:
+    #    for gpu in gpus:
+    #        tf.config.experimental.set_memory_growth(gpu, True)
 
     dataset = TFDataset()
     train_data, train_count = dataset.generate_datatset()
