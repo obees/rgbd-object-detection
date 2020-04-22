@@ -8,7 +8,7 @@ class FeatureMap(object):
     def __init__(self, feature_map_list):
         self.s_min = 0.2
         self.s_max = 0.9
-        self.num_feature_maps = 6
+        self.num_feature_maps = 5
         self.feature_maps = feature_map_list
 
     def get_downsampling_ratio(self, index):

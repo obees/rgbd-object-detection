@@ -2,15 +2,15 @@
 EPOCHS = 50
 BATCH_SIZE = 8
 NUM_CLASSES = 20
-IMAGE_HEIGHT = 300
-IMAGE_WIDTH = 300
+IMAGE_HEIGHT = 224 # 300
+IMAGE_WIDTH = 224  # 300
 CHANNELS = 3
 
-load_weights_before_training = False
-load_weights_from_epoch = 0
+load_weights_before_training = True
+load_weights_from_epoch = 15
 save_frequency = 5
 
-test_picture_dir = ""
+test_picture_dir = "./test_pictures/2008_000931.jpg"
 
 test_images_during_training = False
 training_results_save_dir = "./test_pictures/"

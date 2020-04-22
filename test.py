@@ -1,7 +1,7 @@
 import tensorflow as tf
 import cv2
 
-from configuration import OBJECT_CLASSES, save_model_dir, test_picture_dir
+from configuration import OBJECT_CLASSES, save_model_dir, test_picture_dir,load_weights_from_epoch
 from core.inference import InferenceProcedure
 from core.ssd import SSD
 from utils.tools import preprocess_image
@@ -46,7 +46,8 @@ if __name__ == '__main__':
             tf.config.experimental.set_memory_growth(gpu, True)
 
     ssd_model = SSD()
-    ssd_model.load_weights(filepath=save_model_dir+"saved_model")
+    #ssd_model.load_weights(filepath=save_model_dir+"saved_model")
+    ssd_model.load_weights(filepath=save_model_dir+"epoch-{}".format(load_weights_from_epoch))
 
     image = test_single_picture(picture_dir=test_picture_dir, model=ssd_model)
 

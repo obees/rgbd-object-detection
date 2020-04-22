@@ -1,5 +1,6 @@
 import tensorflow as tf
 import time
+import numpy as np
 
 from configuration import IMAGE_HEIGHT, IMAGE_WIDTH, CHANNELS, EPOCHS, NUM_CLASSES, BATCH_SIZE, save_model_dir, \
     load_weights_before_training, load_weights_from_epoch, save_frequency, test_images_during_training, \
@@ -9,14 +10,26 @@ from core.loss import SSDLoss
 from core.make_dataset import TFDataset
 from core.ssd import SSD, ssd_prediction
 from utils.visualize import visualize_training_results
-
+from core.models.resnet import ResNet50
 
 def print_model_summary(network):
-    network.build(input_shape=(None, IMAGE_HEIGHT, IMAGE_WIDTH, CHANNELS))
+    #network.build(input_shape=(None, IMAGE_HEIGHT, IMAGE_WIDTH, CHANNELS))
+    #network.summary()
+    img = np.random.random((1, 224, 224, 3)).astype('float32')
+    #    extracted_features = features_extraction_model(img)
+    #print(network(img))
+    network(img)
     network.summary()
 
-
 if __name__ == '__main__':
+    # tests
+    #resnet = ResNet50()
+    #print_model_summary(network=resnet)
+    ssd = SSD()
+    print_model_summary(network=ssd)
+    #print(ssd.features_list)
+
+#def toto():
     # GPU settings
     gpus = tf.config.list_physical_devices("GPU")
     if gpus:
@@ -30,7 +43,7 @@ if __name__ == '__main__':
     print_model_summary(network=ssd)
 
     if load_weights_before_training:
-        ssd.load_weights(filepath=save_model_dir+"epoch-{}".format(load_weights_from_epoch))
+        ssd.load_weights(filepath=save_model_dir+"epoch2-{}".format(load_weights_from_epoch))
         print("Successfully load weights!")
     else:
         load_weights_from_epoch = -1
@@ -48,7 +61,7 @@ if __name__ == '__main__':
 
     def train_step(batch_images, batch_labels):
         with tf.GradientTape() as tape:
-            pred = ssd(batch_images, training=True)
+            pred = ssd(batch_images, training=False)
             output = ssd_prediction(feature_maps=pred, num_classes=NUM_CLASSES + 1)
             gt = MakeGT(batch_labels, pred)
             gt_boxes = gt.generate_gt_boxes()
@@ -79,8 +92,8 @@ if __name__ == '__main__':
         cls_loss_metric.reset_states()
         reg_loss_metric.reset_states()
 
-        if epoch % save_frequency == 0:
-            ssd.save_weights(filepath=save_model_dir+"epoch-{}".format(epoch), save_format="tf")
+        #if epoch % save_frequency == 0:
+        ssd.save_weights(filepath=save_model_dir+"epoch2-{}".format(epoch), save_format="tf")
 
         if test_images_during_training:
             visualize_training_results(pictures=test_images_dir_list, model=ssd, epoch=epoch)
