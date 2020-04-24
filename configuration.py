@@ -7,7 +7,7 @@ IMAGE_WIDTH = 224  # 300
 CHANNELS = 3
 
 load_weights_before_training = True
-load_weights_from_epoch = 15
+load_weights_from_epoch = 35
 save_frequency = 5
 print_frequency = 100
 
